@@ -4,22 +4,17 @@ A new Flutter project.
 
 ## Getting Started
 
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code ScreenShots</title>
-</head>
-<body> -->
-    <img src="assets\screenshots\Screenshot (9).png" alt="loading..." style="width:1366px;height:768px";>
-    <img src="assets\screenshots\Screenshot (7).png" alt="loading..." width="1366" height="760">
-    <img src="assets\screenshots\Screenshot (8).png" alt="loading..." width="1366" height="760">
-    <img src="assets\screenshots\Screenshot (5).png" alt="loading..." width="1366" height="760">
-    <img src="assets\screenshots\Screenshot (11).png"alt="loading..." width="1366" height="760">
-<!-- </body>
-</html> -->
+
+<div> 
+    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(7).png?raw=true"alt="loading..." width="1266" height="500">
+    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(9).png?raw=true" alt="loading..."        style="width:1266px;height:500px";>
+    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(8).png?raw=true" alt="loading..." width="1266" height="500">
+    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(11).png?raw=true" alt="loading..." width="1266" height="500">
+    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(5).png?raw=true" alt="loading..." width="1266" height="500>
+    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(10).png?raw=true" alt="loading..." width="1266" height="500">
+    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(6).png?raw=true"alt="loading..."width="1266" height="500">
+ </div>
+
 <!-- This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
