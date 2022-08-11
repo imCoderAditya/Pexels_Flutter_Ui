@@ -1,7 +1,5 @@
 # pexels_api_flutter_ui
 
-A new Flutter project.
-
 ## Pexels App Screenshots
 
 
