@@ -1,10 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_network/image_network.dart';
 import 'package:pexels_api_flutter_ui/fullscreenview.dart';
 import 'package:pexels_api_flutter_ui/utils/datafile.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class Wallpaper extends StatelessWidget {
   const Wallpaper({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class Wallpaper extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: HexColor("#03fcc2"),
+        // backgroundColor: HexColor("#03fcc2"),
         centerTitle: true,
         title: const Text("Pexels"),
       ),
@@ -81,59 +82,56 @@ class _BodyWallpaperState extends State<BodyWallpaper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:Column(
-        children: <Widget>[
-         Expanded(
-              child: Container(
-            child:GridView.builder(
-                itemCount: images.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  childAspectRatio: 2 / 3, // x/y
-                  crossAxisSpacing: 2,
-                  mainAxisSpacing: 2,
-                ),
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => FullScreenView(
-                                imageUrl: images[index]['src']['large2x'],
-                                photographer: images[index]["photographer"],
-                                color: images[index] ["avg_color"],
-                              )));
-                    },
-                    // ignore: unnecessary_null_comparison
-                    child:SizedBox(
-                      child: Image.network(
-                        images[index]['src']["large2x"],
-                        //loadingBuilder: (context, child, loadingProgress) =>const CircularProgressIndicator(),
-                        errorBuilder:(context, error, stackTrace) => const Icon(Icons.error),
-                        fit: BoxFit.cover,
-                      ),
-                    )
-                  );
-                }),
-          ),
-          ),
 
-          InkWell(
-            onTap: moreData,
+      floatingActionButton: FloatingActionButton(
+        onPressed: (() => moreData()),
+        backgroundColor: Colors.blueGrey,
+        child: Text(
+          "Page\n${page}",
+          textAlign: TextAlign.center,
+          style: const TextStyle(color: Colors.white),
+          ),),
+      backgroundColor: Colors.black,
+      body: Column(
+        children: <Widget>[
+          Expanded(
             child: Container(
-              width: double.infinity,
-              height: 40,
-              color: Colors.black,
-              child: const Center(
-                child: Text(
-                  "More",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
+              child: GridView.builder(
+                  itemCount: images.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                    childAspectRatio: 2 / 3, // x/y
+                    crossAxisSpacing: 2,
+                    mainAxisSpacing: 2,
+                  ),
+                  itemBuilder: (context, index) {
+                    String imagesPath = images[index]['src']['large2x'];
+                    return InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => FullScreenView(
+                                    imageUrl: images[index]['src']['large2x'],
+                                    photographer: images[index]["photographer"],
+                                    color: images[index]["avg_color"],
+                                  )));
+                        },
+                        child: imagesPath == null
+                            ? Image.asset("assets/images/image.png")
+                            : Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: CachedNetworkImage(
+                                  imageUrl: imagesPath,
+                                  fit: BoxFit.cover,
+                                  filterQuality: FilterQuality.high,
+                                  placeholder: (context, url) =>
+                                      Image.network(url),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
+                                ),
+                              ));
+                  }),
             ),
-          )
+          ),
         ],
       ),
     );

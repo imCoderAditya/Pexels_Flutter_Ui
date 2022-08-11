@@ -38,6 +38,8 @@ dependencies:
   hexcolor: ^2.0.7
   wallpaper_manager_flutter: ^0.0.2
   flutter_cache_manager:
+  image_network: ^2.5.1
+  cached_network_image: ^3.2.1
 
 dev_dependencies:
   flutter_test:
