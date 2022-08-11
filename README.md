@@ -1,10 +1,19 @@
 # pexels_api_flutter_ui
 
-A new Flutter project.
+## Pexels App Screenshots
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+<div> 
+    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(7).png?raw=true"alt="loading..." width="1266" height="500">
+    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(9).png?raw=true" alt="loading..."        style="width:1266px;height:500px";>
+    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(8).png?raw=true" alt="loading..." width="1266" height="500">
+    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(11).png?raw=true" alt="loading..." width="1266" height="500">
+    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(5).png?raw=true" alt="loading..." width="1266" height="500>
+    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(10).png?raw=true" alt="loading..." width="1266" height="500">
+    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(6).png?raw=true"alt="loading..."width="1266" height="500">
+ </div>
+
+<!-- This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
 
@@ -13,4 +22,5 @@ A few resources to get you started if this is your first Flutter project:
 
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+samples, guidance on mobile development, and a full API reference. -->
+
