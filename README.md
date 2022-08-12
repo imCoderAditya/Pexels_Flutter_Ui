@@ -10,7 +10,7 @@
     <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(11).png?raw=true" alt="loading..." width="1080" height="480">
     <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(5).png?raw=true" alt="loading..." width="1080" height="480">
     <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(10).png?raw=true" alt="loading..." width="1080" height="480">
-    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(6).png?raw=true"alt="loading..."width="1266" height="500">
+    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(6).png?raw=true"alt="loading..."width="1080" height="480">
  </div>
 
 <!-- This project is a starting point for a Flutter application.
