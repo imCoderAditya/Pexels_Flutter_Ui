@@ -4,7 +4,7 @@
 
 
 <div> 
-    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(7).png?raw=true"alt="loading..." width="1266" height="500">
+    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(7).png?raw=true"alt="loading..." width="1080" height="480">
     <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(9).png?raw=true" alt="loading..."        style="width:1266px;height:500px";>
     <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(8).png?raw=true" alt="loading..." width="1266" height="500">
     <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(11).png?raw=true" alt="loading..." width="1266" height="500">
