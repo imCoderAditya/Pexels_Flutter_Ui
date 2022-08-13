@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_network/image_network.dart';
-import 'package:pexels_api_flutter_ui/fullscreenview.dart';
+import 'package:pexels_api_flutter_ui/screen/fullscreenview.dart';
 import 'package:pexels_api_flutter_ui/utils/datafile.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -82,7 +82,6 @@ class _BodyWallpaperState extends State<BodyWallpaper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       floatingActionButton: FloatingActionButton(
         onPressed: (() => moreData()),
         backgroundColor: Colors.blueGrey,
@@ -90,7 +89,8 @@ class _BodyWallpaperState extends State<BodyWallpaper> {
           "Page\n${page}",
           textAlign: TextAlign.center,
           style: const TextStyle(color: Colors.white),
-          ),),
+        ),
+      ),
       backgroundColor: Colors.black,
       body: Column(
         children: <Widget>[

@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -11,12 +10,14 @@ class FullScreenView extends StatefulWidget {
   String? imageUrl;
   String? photographer;
   String? color;
+  String? photographerUrl;
 
   FullScreenView({
     Key? key,
     this.imageUrl,
     this.photographer,
     this.color,
+    this.photographerUrl
   }) : super(key: key);
 
   @override
@@ -24,7 +25,9 @@ class FullScreenView extends StatefulWidget {
 }
 
 class _FullScreenViewState extends State<FullScreenView> {
-  Future<void> setWallpaper(location , title) async {
+
+
+  Future<void> setWallpaper(location, title) async {
     File file = await DefaultCacheManager().getSingleFile(widget.imageUrl!);
 
     try {
@@ -34,11 +37,12 @@ class _FullScreenViewState extends State<FullScreenView> {
           .showSnackBar(SnackBar(content: Text(title)));
     } catch (e) {
       // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(title)));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(title)));
       print(e);
-    }
 
+    }
+  
     // int location = WallpaperManagerFlutter.HOME_SCREEN; //Choose screen type
     // final result = await WallpaperManagerFlutter().setwallpaperfromFile(cachedimage, location);
     // ignore: avoid_print
@@ -47,19 +51,19 @@ class _FullScreenViewState extends State<FullScreenView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    backgroundColor: HexColor(widget.color.toString()), 
+      backgroundColor: HexColor(widget.color.toString()),
       extendBodyBehindAppBar: true,
       body: ListView(
         children: <Widget>[
           SizedBox(
             height: 700.0,
-            child: Image.network(widget.imageUrl!)==null
-                      ? Image.asset("assets/images/image.png ",scale: 1.0,)
-                      : Image.network(
-                        widget.imageUrl! ,
-                        scale: 1.0,
-                        fit: BoxFit.cover,
-                      ),
+            child: Image.network(widget.imageUrl!) == null
+                ? Image.asset("assets/images/image.png")
+                : Image.network(
+                    widget.imageUrl!,
+                    scale: 1.0,
+                    fit: BoxFit.cover,
+                  ),
           ),
           Column(
             children: [
@@ -70,8 +74,9 @@ class _FullScreenViewState extends State<FullScreenView> {
                     alignment: Alignment.bottomCenter,
                     child: MaterialButton(
                       color: HexColor(widget.color.toString()),
-                      onPressed: () =>
-                          setWallpaper(WallpaperManagerFlutter.BOTH_SCREENS,"Both Screen in set wallpaper"),
+                      onPressed: () => setWallpaper(
+                          WallpaperManagerFlutter.BOTH_SCREENS,
+                          "Both Screen in set wallpaper"),
                       child: const Text(
                         "Set Both",
                         style: TextStyle(color: Colors.white, fontSize: 18.0),
@@ -82,8 +87,9 @@ class _FullScreenViewState extends State<FullScreenView> {
                     alignment: Alignment.bottomCenter,
                     child: MaterialButton(
                       color: HexColor(widget.color.toString()),
-                      onPressed: () =>
-                          setWallpaper(WallpaperManagerFlutter.HOME_SCREEN,"Home Screen in set wallpaper"),
+                      onPressed: () => setWallpaper(
+                          WallpaperManagerFlutter.HOME_SCREEN,
+                          "Home Screen in set wallpaper"),
                       child: const Text(
                         "Set Home",
                         style: TextStyle(color: Colors.white, fontSize: 18.0),
@@ -94,8 +100,9 @@ class _FullScreenViewState extends State<FullScreenView> {
                     alignment: Alignment.bottomCenter,
                     child: MaterialButton(
                       color: HexColor(widget.color.toString()),
-                      onPressed: () =>
-                          setWallpaper(WallpaperManagerFlutter.LOCK_SCREEN,"Lock Screen in set wallpaper"),
+                      onPressed: () => setWallpaper(
+                          WallpaperManagerFlutter.LOCK_SCREEN,
+                          "Lock Screen in set wallpaper"),
                       child: const Text(
                         "Set Lock",
                         style: TextStyle(color: Colors.white, fontSize: 18.0),
@@ -104,13 +111,29 @@ class _FullScreenViewState extends State<FullScreenView> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20,),
-              SizedBox(
-                child: Text("PhotoGrapher : ${widget.photographer!}",
-                  style: const TextStyle(
-                    fontSize: 18
-                  ),
-                  ),
+              const SizedBox(
+                height: 20,
+              ),
+             
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                
+              Container(
+                width: 80,
+                height: 80,
+                child: CircleAvatar(
+                backgroundImage:NetworkImage(widget.imageUrl!)
+                ),
+              ),
+                 SizedBox(
+                child: Text(
+                  "PhotoGrapher : ${widget.photographer!}",
+                  style: const TextStyle(fontSize: 18),
+                ),
+              ),
+                ],
               )
             ],
           ),
