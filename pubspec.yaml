@@ -40,6 +40,7 @@ dependencies:
   flutter_cache_manager:
   image_network: ^2.5.1
   cached_network_image: ^3.2.1
+  progress_indicators: ^1.0.0
 
    
 

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -12,20 +13,19 @@ class FullScreenView extends StatefulWidget {
   String? color;
   String? photographerUrl;
 
-  FullScreenView({
-    Key? key,
-    this.imageUrl,
-    this.photographer,
-    this.color,
-    this.photographerUrl
-  }) : super(key: key);
+  FullScreenView(
+      {Key? key,
+      this.imageUrl,
+      this.photographer,
+      this.color,
+      this.photographerUrl})
+      : super(key: key);
 
   @override
   State<FullScreenView> createState() => _FullScreenViewState();
 }
 
 class _FullScreenViewState extends State<FullScreenView> {
-
 
   Future<void> setWallpaper(location, title) async {
     File file = await DefaultCacheManager().getSingleFile(widget.imageUrl!);
@@ -38,14 +38,10 @@ class _FullScreenViewState extends State<FullScreenView> {
     } catch (e) {
       // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(title)));
+          .showSnackBar(SnackBar(content: Text(e.toString())));
       print(e);
-
     }
-  
-    // int location = WallpaperManagerFlutter.HOME_SCREEN; //Choose screen type
-    // final result = await WallpaperManagerFlutter().setwallpaperfromFile(cachedimage, location);
-    // ignore: avoid_print
+ 
   }
 
   @override
@@ -55,15 +51,21 @@ class _FullScreenViewState extends State<FullScreenView> {
       extendBodyBehindAppBar: true,
       body: ListView(
         children: <Widget>[
-          SizedBox(
-            height: 700.0,
-            child: Image.network(widget.imageUrl!) == null
-                ? Image.asset("assets/images/image.png")
-                : Image.network(
-                    widget.imageUrl!,
-                    scale: 1.0,
-                    fit: BoxFit.cover,
-                  ),
+          CachedNetworkImage(
+            height: 700,
+            width: double.infinity,
+            imageUrl: widget.imageUrl!,
+            fit: BoxFit.cover,
+            progressIndicatorBuilder: (context, url, progress) {
+              return const Center(
+                child: SizedBox(
+                  width: 40.0,
+                  height: 40.0,
+                  child:  CircularProgressIndicator(),
+                ),
+              );
+            },
+            errorWidget: (context, url, error) =>const Icon(Icons.error),
           ),
           Column(
             children: [
@@ -114,25 +116,21 @@ class _FullScreenViewState extends State<FullScreenView> {
               const SizedBox(
                 height: 20,
               ),
-             
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                
-              Container(
-                width: 80,
-                height: 80,
-                child: CircleAvatar(
-                backgroundImage:NetworkImage(widget.imageUrl!)
-                ),
-              ),
-                 SizedBox(
-                child: Text(
-                  "PhotoGrapher : ${widget.photographer!}",
-                  style: const TextStyle(fontSize: 18),
-                ),
-              ),
+                  Container(
+                    width: 60,
+                    height: 60,
+                    child: CircleAvatar(
+                        backgroundImage: NetworkImage(widget.imageUrl!)),
+                  ),
+                  SizedBox(
+                    child: Text(
+                      "PhotoGrapher : ${widget.photographer!}",
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                  ),
                 ],
               )
             ],

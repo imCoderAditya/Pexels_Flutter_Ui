@@ -1,10 +1,9 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
-import 'package:pexels_api_flutter_ui/model/pexels_model.dart';
-import 'package:pexels_api_flutter_ui/model/photos.dart';
 import 'package:pexels_api_flutter_ui/screen/fullscreenview.dart';
 import 'package:pexels_api_flutter_ui/utils/datafile.dart';
 import 'package:pexels_api_flutter_ui/widgets/drawer.dart';
@@ -18,14 +17,8 @@ class MobileBody extends StatefulWidget {
 }
 
 class _MobileBodyState extends State<MobileBody> {
-  List<dynamic> bgColor = [];
   int page = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    fetchData();
-  }
+  List<dynamic> image = [];
 
   Future<void> fetchData() async {
     try {
@@ -33,15 +26,10 @@ class _MobileBodyState extends State<MobileBody> {
           headers: {"Authorization": BaseUrl.apiKey.toString()}).then((value) {
         final resuilt = jsonDecode(value.body);
         final decodeData = resuilt["photos"];
-
-        PexelsModel.photos = List.from(decodeData)
-            .map<Photos>((e) => Photos.fromMap(e))
-            .toList();
-
         setState(() {
-          //  print(decodeData);
-          bgColor = resuilt["photos"];
-          print(bgColor);
+          image = decodeData;
+          print(image);
+          // print(bgColor);
         });
       }).timeout(const Duration(minutes: 5));
     } catch (e) {
@@ -51,9 +39,7 @@ class _MobileBodyState extends State<MobileBody> {
   }
 
   Future<void> moreData() async {
-    setState(() {
-      page += 1;
-    });
+    page += 1;
 
     try {
       String url = BaseUrl.addDataUrl.toString() + page.toString();
@@ -61,15 +47,11 @@ class _MobileBodyState extends State<MobileBody> {
           headers: {"Authorization": BaseUrl.apiKey.toString()}).then((value) {
         var resuilt = jsonDecode(value.body);
         final decodeData = resuilt["photos"];
-        print(url);
+        image.addAll(decodeData);
 
-        setState(() {
-          PexelsModel.photos = List.from(decodeData)
-            .map<Photos>((e) => Photos.fromMap(e))
-            .toList();
-          PexelsModel.photos!.addAll(decodeData);
-          bgColor.addAll(decodeData);
-        });
+        setState(() {});
+        // check url
+        print(url);
       });
     } catch (e) {
       print(e);
@@ -77,14 +59,24 @@ class _MobileBodyState extends State<MobileBody> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      backgroundColor: Colors.black,
       appBar: AppBar(
         centerTitle: true,
         title: const Text("Pexels"),
       ),
-      drawer: MyDrawer(),
+      drawer: MyDrawer(
+        color: Colors.blueGrey,
+        imageUrl:
+            "https://images.pexels.com/photos/13146110/pexels-photo-13146110.jpeg?",
+      ),
       floatingActionButton: MyFloatingActionButton(
         title: "Page",
         onPressed: () {
@@ -96,35 +88,60 @@ class _MobileBodyState extends State<MobileBody> {
         textAlign: TextAlign.center,
         iconColor: Colors.white,
       ),
-      body:GridView.builder(
-            itemCount: PexelsModel.photos!.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              mainAxisSpacing: 2,
-              childAspectRatio: 2 / 3,
-              crossAxisSpacing: 2,
-            ),
-            itemBuilder: (context, index) {
-              return Card(
-                color: HexColor(bgColor[index]['avg_color']),
+      body: GridView.builder(
+          itemCount: image.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            childAspectRatio: 2 / 3,
+            crossAxisSpacing: 2,
+            mainAxisSpacing: 2,
+          ),
+          itemBuilder: ((context, index) {
+            String imageUrlLarge = image[index]["src"]["large"];
+            String imageUrlOriginal = image[index]["src"]["large2x"];
+            String photographer = image[index]["photographer"];
+            String avgColor = image[index]["avg_color"];
+            String photographerUrl = image[index]["photographer_url"];
+            return Card(
+                color: HexColor(image[index]["avg_color"]),
                 child: InkWell(
                   onTap: () {
-                    Navigator.of(context)
-                    .push(MaterialPageRoute(builder: ((context) => FullScreenView(
-                       imageUrl: PexelsModel.photos![index].src!.large,
-                       color: bgColor[index]["avg_color"],
-                       photographer: PexelsModel.photos![index].photographer,
-                       photographerUrl: PexelsModel.photos![index].photographerUrl,
-                    ))));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: ((context) => FullScreenView(
+                              imageUrl: imageUrlOriginal,
+                              color: avgColor,
+                              photographer: photographer,
+                              photographerUrl: photographerUrl,
+                            ))));
                   },
-                    child: Image.network(
-                      PexelsModel.photos![index].src!.large.toString(),
-                      fit: BoxFit.cover,
-                      ),
+                  child: CachedNetworkImage(
+                    imageUrl: imageUrlLarge,
+                    fit: BoxFit.cover,
+                    // imageBuilder: (context, imageProvider) => Container(
+                    //   decoration: BoxDecoration(
+                    //     image: DecorationImage( 
+                    //         image: imageProvider,
+                    //         fit: BoxFit.cover,
+                    //         colorFilter: const ColorFilter.mode(
+                    //             Colors.yellow, BlendMode.modulate)),
+                    //   ),
+                    // ),
+                    placeholder: (context, url) {
+                      return const Center(
+                        child: SizedBox(
+                          width: 40,
+                          height: 40,
+                          child: CircularProgressIndicator(
+                            color: Colors.blue,
+                          ),
+                        ),
+                      );
+                    },
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                   ),
-              );
-            }),
-      
+                ));
+          })),
     );
   }
 }
