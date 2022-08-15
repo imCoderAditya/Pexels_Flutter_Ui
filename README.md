@@ -1,25 +1,18 @@
 # pexels_api_flutter_ui
 
-A new Flutter project.
+## Pexels App Screenshots
 
-## Getting Started
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code ScreenShots</title>
-</head>
-<body>
-    <img src="assets\screenshots\Screenshot (9).png" alt="loading..." style="width:1080px;height:480px";>
-    <img src="assets\screenshots\Screenshot (7).png" alt="loading..." width="1080" height="480">
-    <img src="assets\screenshots\Screenshot (8).png" alt="loading..." width="1080" height="480">
-    <img src="assets\screenshots\Screenshot (5).png" alt="loading..." width="1080" height="480">
-    <img src="assets\screenshots\Screenshot (11).png"alt="loading..." width="1080" height="480">
-</body>
-</html>
+<div> 
+    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(7).png?raw=true"alt="loading..." width="1080" height="480">
+    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(9).png?raw=true" alt="loading..."        style="width:1266px;height:500px";>
+    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(8).png?raw=true" alt="loading..." width="1080" height="480">
+    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(11).png?raw=true" alt="loading..." width="1080" height="480">
+    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(5).png?raw=true" alt="loading..." width="1080" height="480">
+    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(10).png?raw=true" alt="loading..." width="1080" height="480">
+    <img src="https://github.com/imCoderAditya/Pexels_Flutter_Ui/blob/Day1/assets/screenshots/Screenshot%20(6).png?raw=true"alt="loading..."width="1080" height="480">
+ </div>
+
 <!-- This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
@@ -30,3 +23,4 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference. -->
+
