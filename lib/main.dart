@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pexels_api_flutter_ui/home_page.dart';
+import 'package:pexels_api_flutter_ui/os/mobile/search.dart';
 
 void main() {
 
@@ -19,8 +20,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+
+    routes: {
+      '/': (context) => const HomePage(),
+    // When navigating to the "/second" route, build the SecondScreen widget.
+      '/search': (context) =>  SearchData(),
+    },
+
+    debugShowCheckedModeBanner: false,
 
       // theme: ThemeData(
       //   brightness: Brightness.light,

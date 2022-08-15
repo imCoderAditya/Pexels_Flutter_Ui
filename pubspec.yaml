@@ -41,6 +41,8 @@ dependencies:
   image_network: ^2.5.1
   cached_network_image: ^3.2.1
   progress_indicators: ^1.0.0
+  easy_search_bar: ^2.3.1
+
 
    
 

@@ -4,4 +4,6 @@ class BaseUrl {
       "563492ad6f91700001000001a619230a456c4df6830471ead41c5b3a";
   static String? addDataUrl =
       "https://api.pexels.com/v1/curated?per_page=80&page=";
+
+  static String searchDataUrl = "https://api.pexels.com/v1/search?query=";
 }
