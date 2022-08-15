@@ -13,7 +13,7 @@ A new Flutter project.
     <title>Code ScreenShots</title>
 </head>
 <body>
-    <img src="assets\screenshots\Screenshot (9).png" alt="loading..." style="width:1366px;height:768px";>
+    <img src="assets\screenshots\Screenshot (9).png" alt="loading..." style="width:1080px;height:480px";>
     <img src="assets\screenshots\Screenshot (7).png" alt="loading..." width="1080" height="480">
     <img src="assets\screenshots\Screenshot (8).png" alt="loading..." width="1080" height="480">
     <img src="assets\screenshots\Screenshot (5).png" alt="loading..." width="1080" height="480">
