@@ -161,7 +161,7 @@ class _GridViewLayout extends StatelessWidget {
 class _CircleImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 100,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -169,15 +169,37 @@ class _CircleImage extends StatelessWidget {
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Container(
-              height: 80,
-              width: 80,
-              child: CircleAvatar(
-                foregroundColor: HexColor(MobileBody.image[index]["avg_color"]),
-                backgroundImage: CachedNetworkImageProvider(
-                    MobileBody.image[index]['src']['large'],
-                    errorListener: () => CachedNetworkImage.evictFromCache(
-                        "assets/images/image.png")),
+            child: InkWell(
+              onTap: () {
+                String imageUrlPortrait =
+                    MobileBody.image[index]["src"]["portrait"];
+                String imageUrlOriginal =
+                    MobileBody.image[index]["src"]["original"];
+                String photographer = MobileBody.image[index]["photographer"];
+                String avgColor = MobileBody.image[index]["avg_color"];
+                String photographerUrl =
+                    MobileBody.image[index]["photographer_url"];
+
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => FullScreenView(
+                          imageUrl: imageUrlPortrait,
+                          imageUrlOriginal: imageUrlOriginal,
+                          photographer: photographer,
+                          color: avgColor,
+                          photographerUrl: photographerUrl,
+                        )));
+              },
+              child: SizedBox(
+                height: 80,
+                width: 80,
+                child: CircleAvatar(
+                  foregroundColor:
+                      HexColor(MobileBody.image[index]["avg_color"]),
+                  backgroundImage: CachedNetworkImageProvider(
+                      MobileBody.image[index]['src']['large'],
+                      errorListener: () => CachedNetworkImage.evictFromCache(
+                          "assets/images/image.png")),
+                ),
               ),
             ),
           );
@@ -194,22 +216,42 @@ class _ImageSlider extends StatelessWidget {
         ? CarouselSlider.builder(
             itemCount: MobileBody.image.length,
             itemBuilder: ((context, index, realIndex) {
-              return CachedNetworkImage(
-                imageUrl: MobileBody.image[index]['src']['landscape'],
-                fit: BoxFit.cover,
-                placeholder: (context, url) => Shimmer(
-                  duration: const Duration(seconds: 3), //Default value
-                  interval: const Duration(seconds: 5), //Default value: Duration(seconds: 0)
-                  color: Colors.white, //Default value
-                  enabled: true, //Default value
-                  direction: const ShimmerDirection.fromLTRB(),
-                  child: Container(
-                    color: HexColor(MobileBody.image[index]['avg_color'])
+              return InkWell(
+                onTap: () {
+                  String imageUrlPortrait =
+                      MobileBody.image[index]["src"]["portrait"];
+                  String imageUrlOriginal =
+                      MobileBody.image[index]["src"]["original"];
+                  String photographer = MobileBody.image[index]["photographer"];
+                  String avgColor = MobileBody.image[index]["avg_color"];
+                  String photographerUrl =
+                      MobileBody.image[index]["photographer_url"];
 
-                  )
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => FullScreenView(
+                            imageUrl: imageUrlPortrait,
+                            imageUrlOriginal: imageUrlOriginal,
+                            photographer: photographer,
+                            color: avgColor,
+                            photographerUrl: photographerUrl,
+                          )));
+                },
+                child: CachedNetworkImage(
+                  imageUrl: MobileBody.image[index]['src']['landscape'],
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => Shimmer(
+                      duration: const Duration(seconds: 3), //Default value
+                      interval: const Duration(
+                          seconds: 5), //Default value: Duration(seconds: 0)
+                      color: Colors.white, //Default value
+                      enabled: true, //Default value
+                      direction: const ShimmerDirection.fromLTRB(),
+                      child: Container(
+                          color:
+                              HexColor(MobileBody.image[index]['avg_color']))),
+                  errorWidget: (context, url, error) =>
+                      Image.asset("assets/images/image.png"),
                 ),
-                errorWidget: (context, url, error) =>
-                    Image.asset("assets/images/image.png"),
               );
             }),
             options: CarouselOptions(
