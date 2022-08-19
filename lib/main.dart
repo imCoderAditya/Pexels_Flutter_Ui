@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:pexels_api_flutter_ui/home_page.dart';
 import 'package:pexels_api_flutter_ui/os/mobile/search.dart';
 
