@@ -20,7 +20,7 @@ class ResponsePage extends StatelessWidget {
       } else if (constraints.maxWidth > 640 && constraints.maxWidth < 800) {
         return teblate;
       } else {
-        return desktop;
+        return mobile;
       }
     }));
   }

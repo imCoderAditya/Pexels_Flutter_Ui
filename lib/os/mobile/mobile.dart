@@ -1,6 +1,6 @@
 import 'dart:convert';
-
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
@@ -8,6 +8,7 @@ import 'package:pexels_api_flutter_ui/api/base_url.dart';
 import 'package:pexels_api_flutter_ui/screen/fullscreenview.dart';
 import 'package:pexels_api_flutter_ui/widgets/drawer.dart';
 import 'package:pexels_api_flutter_ui/widgets/floatingActionButton.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
 
 class MobileBody extends StatefulWidget {
   static List<dynamic> image = [];
@@ -65,7 +66,6 @@ class _MobileBodyState extends State<MobileBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
         appBar: AppBar(
           centerTitle: true,
           title: const Text("Pexels"),
@@ -94,56 +94,135 @@ class _MobileBodyState extends State<MobileBody> {
           iconColor: Colors.white,
         ),
         body: MobileBody.image.isNotEmpty
-            ? GridView.builder(
-                itemCount: MobileBody.image.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  childAspectRatio: 2 / 3,
-                  crossAxisSpacing: 2,
-                  mainAxisSpacing: 2,
-                ),
-                itemBuilder: ((context, index) {
-                  String imageUrlLarge =
-                      MobileBody.image[index]["src"]["original"];
-                  String imageUrlOriginal =
-                      MobileBody.image[index]["src"]["large"];
-                  String photographer = MobileBody.image[index]["photographer"];
-                  String avgColor = MobileBody.image[index]["avg_color"];
-                  String photographerUrl =
-                      MobileBody.image[index]["photographer_url"];
-                  return Card(
-                      color: HexColor(MobileBody.image[index]["avg_color"]),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: ((context) => FullScreenView(
-                                    imageUrl: imageUrlOriginal,
-                                    color: avgColor,
-                                    photographer: photographer,
-                                    photographerUrl: photographerUrl,
-                                  ))));
-                        },
-                        child: CachedNetworkImage(
-                          imageUrl: imageUrlLarge,
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) {
-                            return const Center(
-                              child: SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: CircularProgressIndicator(
-                                  color: Colors.blue,
-                                ),
-                              ),
-                            );
-                          },
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
-                        ),
-                      ));
-                }))
-               : const Center(
+            ? SingleChildScrollView(
+                child: Column(
+                children: [
+                  _ImageSlider(),
+                  _CircleImage(),
+                  _GridViewLayout(),
+                ],
+              ))
+            : const Center(
                 child: CircularProgressIndicator(),
               ));
+  }
+}
+
+class _GridViewLayout extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+        shrinkWrap: true,
+        physics: const ScrollPhysics(parent: BouncingScrollPhysics()),
+        itemCount: MobileBody.image.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            childAspectRatio: 2 / 3,
+            crossAxisSpacing: 2,
+            mainAxisSpacing: 2),
+        itemBuilder: ((context, index) {
+          return InkWell(
+            onTap: () {
+              String imageUrlPortrait =
+                  MobileBody.image[index]["src"]["portrait"];
+              String imageUrlOriginal =
+                  MobileBody.image[index]["src"]["original"];
+              String photographer = MobileBody.image[index]["photographer"];
+              String avgColor = MobileBody.image[index]["avg_color"];
+              String photographerUrl =
+                  MobileBody.image[index]["photographer_url"];
+
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => FullScreenView(
+                        imageUrl: imageUrlPortrait,
+                        imageUrlOriginal: imageUrlOriginal,
+                        photographer: photographer,
+                        color: avgColor,
+                        photographerUrl: photographerUrl,
+                      )));
+            },
+            child: Card(
+              color: HexColor(MobileBody.image[index]["avg_color"]),
+              child: CachedNetworkImage(
+                imageUrl: MobileBody.image[index]['src']['large'],
+                fit: BoxFit.cover,
+                placeholder: (context, url) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              ),
+            ),
+          );
+        }));
+  }
+}
+
+class _CircleImage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: MobileBody.image.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Container(
+              height: 80,
+              width: 80,
+              child: CircleAvatar(
+                foregroundColor: HexColor(MobileBody.image[index]["avg_color"]),
+                backgroundImage: CachedNetworkImageProvider(
+                    MobileBody.image[index]['src']['large'],
+                    errorListener: () => CachedNetworkImage.evictFromCache(
+                        "assets/images/image.png")),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _ImageSlider extends StatelessWidget {
+  @override
+  Widget build(Object context) {
+    return MobileBody.image.isNotEmpty
+        ? CarouselSlider.builder(
+            itemCount: MobileBody.image.length,
+            itemBuilder: ((context, index, realIndex) {
+              return CachedNetworkImage(
+                imageUrl: MobileBody.image[index]['src']['landscape'],
+                fit: BoxFit.cover,
+                placeholder: (context, url) => Shimmer(
+                  duration: const Duration(seconds: 3), //Default value
+                  interval: const Duration(seconds: 5), //Default value: Duration(seconds: 0)
+                  color: Colors.white, //Default value
+                  enabled: true, //Default value
+                  direction: const ShimmerDirection.fromLTRB(),
+                  child: Container(
+                    color: HexColor(MobileBody.image[index]['avg_color'])
+
+                  )
+                ),
+                errorWidget: (context, url, error) =>
+                    Image.asset("assets/images/image.png"),
+              );
+            }),
+            options: CarouselOptions(
+              autoPlay: true,
+              enableInfiniteScroll: true,
+              viewportFraction: 0.8,
+              autoPlayInterval: const Duration(seconds: 3),
+              autoPlayAnimationDuration: const Duration(milliseconds: 800),
+              enlargeCenterPage: true,
+              //  pauseAutoPlayOnTouch: true
+            ))
+        : const Center(
+            child: Text(""),
+          );
   }
 }

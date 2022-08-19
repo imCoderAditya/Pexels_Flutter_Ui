@@ -9,6 +9,7 @@ import 'package:wallpaper_manager_flutter/wallpaper_manager_flutter.dart';
 // ignore: must_be_immutable
 class FullScreenView extends StatefulWidget {
   String? imageUrl;
+  String? imageUrlOriginal;
   String? photographer;
   String? color;
   String? photographerUrl;
@@ -18,6 +19,7 @@ class FullScreenView extends StatefulWidget {
       this.imageUrl,
       this.photographer,
       this.color,
+      this.imageUrlOriginal,
       this.photographerUrl})
       : super(key: key);
 
@@ -54,7 +56,9 @@ class _FullScreenViewState extends State<FullScreenView> {
           CachedNetworkImage(
             height: 700,
             width: double.infinity,
-            imageUrl: widget.imageUrl!,
+            imageUrl: widget.imageUrlOriginal!.isEmpty
+                      ?widget.imageUrl!
+                      :widget.imageUrlOriginal!,
             fit: BoxFit.cover,
             progressIndicatorBuilder: (context, url, progress) {
               return const Center(
@@ -119,7 +123,7 @@ class _FullScreenViewState extends State<FullScreenView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 60,
                     height: 60,
                     child: CircleAvatar(
